@@ -1,16 +1,12 @@
-import axios, { AxiosInstance } from "axios";
+import axios from "axios";
 import { ApiResponse, EResponseCodes } from "./api-response";
 import { useContext } from "react";
 import { AppContext } from "../app.context";
 
-
-export function useApiService(apiURL: string) {
+export function useApiService(apiURL) {
   const { authorization } = useContext(AppContext);
 
-  async function get<T>(
-    endpoint: string,
-    params: Object = {}
-  ): Promise<ApiResponse<T>> {
+  async function get(endpoint, params) {
     try {
       const api = instanceApi(apiURL);
       return await api({
@@ -24,11 +20,7 @@ export function useApiService(apiURL: string) {
     }
   }
 
-  async function post<T>(
-    endpoint: string,
-    data: Object = {},
-    params: Object = {}
-  ): Promise<ApiResponse<T>> {
+  async function post(endpoint, data, params) {
     try {
       const api = instanceApi(apiURL);
       console.log(endpoint);
@@ -43,11 +35,7 @@ export function useApiService(apiURL: string) {
     }
   }
 
-  async function put<T>(
-    endpoint: string,
-    data: Object = {},
-    params: Object = {}
-  ): Promise<ApiResponse<T>> {
+  async function put(endpoint, data = {}, params = {}) {
     try {
       const api = instanceApi(apiURL);
       return await api({
@@ -61,10 +49,7 @@ export function useApiService(apiURL: string) {
     }
   }
 
-  async function remove<T>(
-    endpoint: string,
-    params: Object = {}
-  ): Promise<ApiResponse<T>> {
+  async function remove(endpoint, params = {}) {
     try {
       const api = instanceApi(apiURL);
       return await api({
@@ -77,10 +62,10 @@ export function useApiService(apiURL: string) {
     }
   }
 
-  function axiosError(error: any): ApiResponse<any> {
+  function axiosError(error) {
     const errorMessage = "Hubo un error al cominicarse con la api.";
     return new ApiResponse(
-      {} as any,
+      {},
       EResponseCodes.FAIL,
       String(error?.response?.request?.response).includes("html")
         ? errorMessage
@@ -89,7 +74,7 @@ export function useApiService(apiURL: string) {
     );
   }
 
-  function instanceApi(apiURL: string): AxiosInstance {
+  function instanceApi() {
     const api = axios.create({
       baseURL: apiURL,
     });
