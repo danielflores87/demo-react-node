@@ -10,26 +10,16 @@ const User = sequelize.define(
       primaryKey: true,
       field: "USR_CODIGO",
     },
-    documentType: {
-      type: DataTypes.STRING(4),
-      allowNull: false,
-      field: "USR_TIPO_DOCUMENTO",
-    },
     documentNumber: {
       type: DataTypes.STRING(15),
       allowNull: false,
       unique: true,
       field: "USR_NUMERO_DOCUMENTO",
     },
-    names: {
+    name: {
       type: DataTypes.STRING(100),
       allowNull: false,
-      field: "USR_NOMBRES",
-    },
-    surnames: {
-      type: DataTypes.STRING(100),
-      allowNull: false,
-      field: "USR_APELLIDOS",
+      field: "USR_NOMBRE",
     },
     email: {
       type: DataTypes.STRING(100),
@@ -41,6 +31,11 @@ const User = sequelize.define(
       type: DataTypes.STRING(1000),
       allowNull: false,
       field: "USR_CLAVE_ACCESO",
+    },
+    role: {
+      type: DataTypes.STRING(20),
+      allowNull: false,
+      field: "USR_ROL_ACCESO",
     },
   },
   {

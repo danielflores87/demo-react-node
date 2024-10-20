@@ -1,10 +1,15 @@
- const EResponseCodes = {
+const EResponseCodes = {
   OK: "OK",
   WARN: "WARN",
   FAIL: "FAIL",
 };
 
- const EHttpStatusCodes = {
+const ERoles = {
+  ADMIN: "Administrador",
+  EMPLOYEE: "Empleado",
+};
+
+const EHttpStatusCodes = {
   OK: 200, // Success
   CREATED: 201, // Resource created
   ACCEPTED: 202, // Request accepted, but not yet processed
@@ -24,13 +29,11 @@
   SERVICE_UNAVAILABLE: 503, // Server error: service temporarily unavailable
 };
 
- class ApiResponse {
+class ApiResponse {
   constructor(data, code, message) {
     this.data = data;
-    this.operation = { code, message };
+    this.operation = { code, message: message || "Operación Exitosa" };
   }
 }
 
-
-
-module.exports = { EResponseCodes, EHttpStatusCodes, ApiResponse };
+module.exports = { EResponseCodes, EHttpStatusCodes, ApiResponse, ERoles };

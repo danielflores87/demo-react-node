@@ -1,7 +1,14 @@
 import axios from "axios";
-import { ApiResponse, EResponseCodes } from "./api-response";
 import { useContext } from "react";
 import { AppContext } from "../app.context";
+import { EResponseCodes } from "./api-response";
+
+class ApiResponse {
+  constructor(data, code, message) {
+    this.data = data;
+    this.operation = { code, message };
+  }
+}
 
 export function useApiService(apiURL) {
   const { authorization } = useContext(AppContext);
@@ -23,7 +30,6 @@ export function useApiService(apiURL) {
   async function post(endpoint, data, params) {
     try {
       const api = instanceApi(apiURL);
-      console.log(endpoint);
       return await api({
         method: "post",
         url: `${endpoint}`,

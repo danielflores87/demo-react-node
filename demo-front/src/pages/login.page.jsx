@@ -10,10 +10,10 @@ import useAuthService from "../hooks/auth-service.hook";
 import { EResponseCodes } from "../helpers/api-response";
 
 const shema = yup.object({
-  identifier: yup
+  email: yup
     .string()
-    .max(15, "Solo se permiten 15 caracteres")
-    .required("El usuario es requerido."),
+    .max(50, "Solo se permiten 50 caracteres")
+    .required("El Correo es requerido."),
   password: yup
     .string()
     .max(16, "Solo se permiten 16 caracteres")
@@ -23,7 +23,7 @@ const shema = yup.object({
 function LoginPage() {
   const resolver = useYupValidationResolver(shema);
   const form = useForm({ resolver });
-  const { signIn } = useAuthService();
+  const { login } = useAuthService();
 
   // States
   const [loading, setLoading] = useState(false);
@@ -33,14 +33,14 @@ function LoginPage() {
     setMessage("");
     setLoading(true);
 
-    const res = await signIn(data);
+    const res = await login(data);
 
     if (res.operation.code != EResponseCodes.OK) {
       setMessage(res.operation.message);
     }
 
     setLoading(false);
-  })
+  });
 
   return (
     <main className=" flex-1 bg-gray-700 ">
@@ -51,7 +51,6 @@ function LoginPage() {
             onSubmit={onSubmitForm}
             className=" flex w-full flex-col items-center justify-center"
           >
-
             <LabelComponent
               type="SubTitle"
               value="Ingrese sus credenciales para iniciar sesión"
@@ -59,14 +58,14 @@ function LoginPage() {
             />
 
             <FormComponent.Input
-              idInput={"identifier"}
+              idInput={"email"}
               typeInput={"text"}
               register={form.register}
-              label={"Usuario *"}
+              label={"Correo *"}
               disabled={loading}
               errors={form.formState.errors}
               className="mt-4 w-2/3"
-              max={15}
+              max={50}
             />
 
             <FormComponent.Input

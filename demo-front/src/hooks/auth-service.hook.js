@@ -1,12 +1,13 @@
 import { useApiService } from "../helpers/api-service";
 
 export function useAuthService() {
-  const apiURL = import.meta.env.URL_API ?? "";
+  const apiURL = import.meta.env.VITE_URL_API ?? "";
+  
   const basePath = "/api/auth";
   const { get, post } = useApiService(apiURL);
 
-  async function signIn(data) {
-    return await post(`${basePath}/sign-in`, data);
+  async function login(data) {
+    return await post(`${basePath}/login`, data);
   }
 
   async function getAuthorization(token) {
@@ -20,7 +21,7 @@ export function useAuthService() {
   }
 
   return {
-    signIn,
+    login,
     getAuthorization,
     validateTokenRecovery,
   };

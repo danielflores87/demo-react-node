@@ -1,5 +1,4 @@
-
-export function getErrorMessage(errors, idInput): string | null {
+export function getErrorMessage(errors, idInput) {
   const keysError = idInput.split(".");
   let errs = errors;
 
