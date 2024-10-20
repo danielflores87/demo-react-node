@@ -7,8 +7,6 @@ services:
     container_name: demo-api
     ports:
       - "3000:3000"
-    volumes:
-      - ./demo-api:/app
     environment:
       NODE_ENV: production
 
@@ -17,7 +15,7 @@ services:
   web:
     build:
       context: ./demo-front 
-    container_name: react-web
+    container_name: demo-front
     ports:
       - "80:80"
     volumes:
