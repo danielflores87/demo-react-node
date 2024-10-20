@@ -1,10 +1,12 @@
 import "./App.css";
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/home.page";
 import LoginPage from "./pages/login.page";
 import { AppContextProvider } from "./app.context";
 import CreateEmployeePage from "./pages/employee/create-employee.page";
 import CreateAplicationPage from "./pages/aplication/create-aplication.page";
+import SearchEmployeePage from "./pages/employee/search-employee.page";
 
 
 function App() {
@@ -17,6 +19,7 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
 
           <Route path="/employees/create" element={<CreateEmployeePage />} />
+          <Route path="/employees" element={<SearchEmployeePage />} />
 
           <Route path="/aplications/create" element={<CreateAplicationPage />} />
 

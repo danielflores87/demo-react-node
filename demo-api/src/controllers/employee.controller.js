@@ -23,7 +23,6 @@ const createEmployee = async (req, res) => {
 const getAllEmployees = async (_req, res) => {
   try {
     const data = await EmployeeRepository.getAllEmployees();
-    console.log(data)
     return res
       .status(EHttpStatusCodes.OK)
       .json(new ApiResponse(data, EResponseCodes.OK));
@@ -34,4 +33,39 @@ const getAllEmployees = async (_req, res) => {
   }
 };
 
-module.exports = { createEmployee, getAllEmployees };
+const getPaginatedEmployees = async (req, res) => {
+  try {
+    const filters = req.body;
+    const data = await EmployeeRepository.getPaginatedEmployees(filters);
+
+    return res
+      .status(EHttpStatusCodes.OK)
+      .json(new ApiResponse(data, EResponseCodes.OK));
+  } catch (error) {
+    return res
+      .status(EHttpStatusCodes.BAD_REQUEST)
+      .json(new ApiResponse(null, EResponseCodes.FAIL, error.message));
+  }
+};
+
+const deleteEmployee = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await EmployeeRepository.deleteEmployee(id);
+
+    return res
+      .status(EHttpStatusCodes.OK)
+      .json(new ApiResponse(true, EResponseCodes.OK));
+  } catch (error) {
+    return res
+      .status(EHttpStatusCodes.BAD_REQUEST)
+      .json(new ApiResponse(null, EResponseCodes.FAIL, error.message));
+  }
+};
+
+module.exports = {
+  createEmployee,
+  getAllEmployees,
+  getPaginatedEmployees,
+  deleteEmployee,
+};

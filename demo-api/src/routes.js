@@ -8,6 +8,8 @@ router.post("/auth/login", authController.login);
 router.post("/auth/users/create", authController.createUser);
 
 router.post("/employee/create", employeeController.createEmployee);
+router.delete("/employee/delete/:id", employeeController.deleteEmployee);
+router.post("/employee/get-paginated", employeeController.getPaginatedEmployees);
 router.get("/employee/get-all", employeeController.getAllEmployees);
 router.post("/aplication/create", applicationController.createApplication);
 
