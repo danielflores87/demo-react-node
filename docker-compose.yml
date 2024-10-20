@@ -1,0 +1,26 @@
+version: '3'
+services:
+  # Node
+  api:
+    build:
+      context: ./demo-api 
+    container_name: demo-api
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./demo-api:/app
+    environment:
+      NODE_ENV: production
+
+
+  # React
+  web:
+    build:
+      context: ./demo-front 
+    container_name: react-web
+    ports:
+      - "80:80"
+    volumes:
+      - ./demo-front:/app
+    depends_on:
+      - api
