@@ -4,23 +4,24 @@ import { PageComponent } from "../../componets/content";
 import ButtonComponent from "../../componets/button.component";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { FormComponent } from "../../componets/form";
-import { IoSearch } from "react-icons/io5";
+import { IoCarSharp, IoSearch } from "react-icons/io5";
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import useYupValidationResolver from "../../hooks/form-validator.hook";
 import * as yup from "yup";
 import { Table } from "antd";
-import { useEmployeeService } from "../../hooks/employee-service.hook";
+import { useApplicationService } from "../../hooks/application-service.hook";
 import { EResponseCodes, ERoles } from "../../helpers/api-response";
 import ModalMessageComponent from "../../componets/modal-message.component";
 
 const formShema = yup.object({
-  name: yup.string().optional(),
+  description: yup.string().optional(),
 });
 
-function SearchEmployeePage() {
+function SearchApplicationPage() {
   // Servicios
-  const { getPaginatedEmployees, deleteEmployee } = useEmployeeService();
+  const { getPaginatedApplications, deleteApplication } =
+    useApplicationService();
   const { validateActionAccess } = useContext(AppContext);
   const navigate = useNavigate();
   const form = useForm({
@@ -32,25 +33,25 @@ function SearchEmployeePage() {
   // States
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
-  const [employeeList, setEmployeeList] = useState([]);
+  const [applicationList, setApplicationList] = useState([]);
   const [message, setMessage] = useState();
 
   // Metodo que se comunica con la api
   async function onSearch(page, PerPage, data) {
     setLoading(true);
-    const res = await getPaginatedEmployees({
+    const res = await getPaginatedApplications({
       ...data,
       page: page,
       perPage: PerPage,
     });
 
     if (res.operation.code === EResponseCodes.OK) {
-      setEmployeeList(res.data.rows);
+      setApplicationList(res.data.rows);
       setTotal(res.data.total);
     } else {
       setMessage({
         type: res.operation.code,
-        title: `Consultar Empleados`,
+        title: `Consultar Solicitud`,
         description: res.operation.message,
         onOk() {
           setMessage();
@@ -78,14 +79,14 @@ function SearchEmployeePage() {
         setMessage();
       },
       onOk() {
-        deleteEmployee(id).then((res) => {
+        deleteApplication(id).then((res) => {
           if (res.operation.code == EResponseCodes.OK) {
             const values = form.getValues();
             onSearch(1, pageSize, values);
           } else {
             setMessage({
               type: res.operation.code,
-              title: `Eliminar Empleado`,
+              title: `Eliminar Solicitud`,
               description: res.operation.message,
               onOk() {
                 setMessage();
@@ -101,14 +102,14 @@ function SearchEmployeePage() {
     <>
       <PageComponent>
         <PageComponent.ContentCard
-          title="Consultar Empleados"
+          title="Consultar Solicitudes"
           headOptions={
             validateActionAccess(ERoles.ADMIN) && (
               <ButtonComponent
-                value="Crear Empleado"
+                value="Crear Solicitud"
                 buttonStyle="Tetriary"
                 icon={<IoIosAddCircleOutline />}
-                action={() => navigate("/employees/create")}
+                action={() => navigate("/applications/create")}
                 disabled={loading}
               />
             )
@@ -118,10 +119,10 @@ function SearchEmployeePage() {
             <FormComponent onSubmit={onSubmitSearch}>
               <PageComponent.GridCard>
                 <FormComponent.Input
-                  idInput={"name"}
+                  idInput={"description"}
                   typeInput={"text"}
                   register={form.register}
-                  label={"Nombre"}
+                  label={"Descripción"}
                   errors={form.formState.errors}
                   disabled={loading}
                 />
@@ -142,14 +143,22 @@ function SearchEmployeePage() {
         <PageComponent.ContentCard>
           <Table
             columns={[
-              { title: "Codigo", dataIndex: "id", key: "id" },
-              { title: "Nombre", dataIndex: "name", key: "name" },
               {
-                title: "Fecha Ingreso",
-                dataIndex: "entryDate",
-                key: "entryDate",
+                title: "Codigo Ref.",
+                dataIndex: "refenceCode",
+                key: "refenceCode",
               },
-              { title: "Salario", dataIndex: "salary", key: "salary" },
+              {
+                title: "Descripcion",
+                dataIndex: "description",
+                key: "description",
+              },
+              {
+                title: "Resumen",
+                dataIndex: "summary",
+                key: "summary",
+              },
+              { title: "Empleado", dataIndex: "employeeId", key: "employeeId" },
               {
                 title: "Acciones",
                 dataIndex: "id",
@@ -164,7 +173,7 @@ function SearchEmployeePage() {
                   ),
               },
             ]}
-            dataSource={employeeList.map((i) => {
+            dataSource={applicationList.map((i) => {
               return { ...i, key: i.id };
             })}
             pagination={{
@@ -186,4 +195,4 @@ function SearchEmployeePage() {
   );
 }
 
-export default React.memo(SearchEmployeePage);
+export default React.memo(SearchApplicationPage);

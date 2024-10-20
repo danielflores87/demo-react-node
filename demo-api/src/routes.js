@@ -11,6 +11,8 @@ router.post("/employee/create", employeeController.createEmployee);
 router.delete("/employee/delete/:id", employeeController.deleteEmployee);
 router.post("/employee/get-paginated", employeeController.getPaginatedEmployees);
 router.get("/employee/get-all", employeeController.getAllEmployees);
-router.post("/aplication/create", applicationController.createApplication);
+router.post("/application/create", applicationController.createApplication);
+router.delete("/application/delete/:id", applicationController.deleteApplication);
+router.post("/application/get-paginated", applicationController.getPaginatedApplications);
 
 module.exports = router;

@@ -6,3 +6,8 @@ export const EResponseCodes = {
 };
 
 
+
+export const ERoles = {
+  ADMIN: "Administrador",
+  EMPLOYEE: "Empleado",
+};

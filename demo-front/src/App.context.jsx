@@ -12,7 +12,10 @@ export function AppContextProvider({ children }) {
 
   // Metodo que verifica si el usuario posee permisos sobre un accion
   function validateActionAccess(indicator) {
-    return true; // AKIVE authorization.allowedActions?.findIndex((i) => i === indicator) >= 0;
+
+
+
+    return indicator == authorization?.role; 
   }
 
   const values = useMemo(() => {

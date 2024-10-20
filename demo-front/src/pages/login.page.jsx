@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import LabelComponent from "../componets/label.component";
 import ButtonComponent from "../componets/button.component";
 import { PageComponent } from "../componets/content";
@@ -8,6 +8,8 @@ import useYupValidationResolver from "../hooks/form-validator.hook";
 import * as yup from "yup";
 import useAuthService from "../hooks/auth-service.hook";
 import { EResponseCodes } from "../helpers/api-response";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../app.context";
 
 const shema = yup.object({
   email: yup
@@ -21,9 +23,12 @@ const shema = yup.object({
 });
 
 function LoginPage() {
+  // Servicios
   const resolver = useYupValidationResolver(shema);
+  const { setAuthorization } = useContext(AppContext);
   const form = useForm({ resolver });
   const { login } = useAuthService();
+  const navigate = useNavigate();
 
   // States
   const [loading, setLoading] = useState(false);
@@ -37,6 +42,10 @@ function LoginPage() {
 
     if (res.operation.code != EResponseCodes.OK) {
       setMessage(res.operation.message);
+    } else {
+      setAuthorization(res.data);
+      localStorage.setItem("Token", res.data.token); //Pendiente implementacion de cuando se cargue la pagina valide el token
+      navigate("/");
     }
 
     setLoading(false);

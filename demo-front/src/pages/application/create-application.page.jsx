@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { FormComponent } from "../../componets/form";
 import { EResponseCodes } from "../../helpers/api-response";
 import ModalMessageComponent from "../../componets/modal-message.component";
-import { useAplicationService } from "../../hooks/aplication-service.hook";
+import { useApplicationService } from "../../hooks/application-service.hook";
 import { GrDocumentUser } from "react-icons/gr";
 import { useEmployeeService } from "../../hooks/employee-service.hook";
 
@@ -20,9 +20,9 @@ const formShema = yup.object({
   employeeId: yup.number().required("Valor requerido."),
 });
 
-function AplicationsFormComponent() {
+function ApplicationsFormComponent() {
   //Servicios
-  const { createAplication } = useAplicationService();
+  const { createApplication } = useApplicationService();
   const { getAllEmployees } = useEmployeeService();
   const navigate = useNavigate();
   const resolver = useYupValidationResolver(formShema);
@@ -46,7 +46,7 @@ function AplicationsFormComponent() {
   const onSubmitForm = form.handleSubmit(async (data) => {
     setLoading(true);
 
-    const res = await createAplication(data);
+    const res = await createApplication(data);
 
     setMessage({
       type: res.operation.code,
@@ -54,7 +54,7 @@ function AplicationsFormComponent() {
       description: res.operation.message,
       onOk() {
         setMessage();
-        if (res.operation.code == EResponseCodes.OK) navigate("/aplications");
+        if (res.operation.code == EResponseCodes.OK) navigate("/applications");
       },
     });
 
@@ -64,7 +64,7 @@ function AplicationsFormComponent() {
   return (
     <>
       <PageComponent.ContentCard>
-        <FormComponent id="aplicationForm" onSubmit={onSubmitForm}>
+        <FormComponent id="applicationForm" onSubmit={onSubmitForm}>
           <PageComponent.GridCard>
             <FormComponent.Input
               idInput={"refenceCode"}
@@ -118,12 +118,12 @@ function AplicationsFormComponent() {
             disabled={loading}
             action={() => {
               form.reset();
-              navigate("/aplications");
+              navigate("/applications");
             }}
           />
           <FormComponent.Button
             buttonStyle="Primary"
-            form="aplicationForm"
+            form="applicationForm"
             value="Guardar"
             type="submit"
             disabled={loading}
@@ -140,17 +140,17 @@ function AplicationsFormComponent() {
   );
 }
 
-function CreateAplicationPage() {
+function CreateApplicationPage() {
   return (
     <PageComponent>
       <PageComponent.ContentCard
         title="Crear Solicitud"
         icon={<GrDocumentUser />}
       >
-        <AplicationsFormComponent type="Create" />
+        <ApplicationsFormComponent type="Create" />
       </PageComponent.ContentCard>
     </PageComponent>
   );
 }
 
-export default React.memo(CreateAplicationPage);
+export default React.memo(CreateApplicationPage);

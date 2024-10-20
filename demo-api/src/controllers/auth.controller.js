@@ -77,9 +77,15 @@ const login = async (req, res) => {
           new ApiResponse(null, EResponseCodes.WARN, "Contraseña invalida")
         );
 
-    const token = jwt.sign({ id: user.id }, process.env.TOKEN_KEY, {
-      expiresIn: "5h",
-    });
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      process.env.TOKEN_KEY,
+      {
+        expiresIn: "5h",
+      }
+    );
+
+    console.log(user)
 
     return res
       .status(EHttpStatusCodes.OK)
