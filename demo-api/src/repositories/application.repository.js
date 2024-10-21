@@ -2,12 +2,12 @@ const Application = require("../models/application");
 const { Op } = require("sequelize");
 
 class ApplicationRepository {
-  static async createApplication(data) {
+   async createApplication(data) {
     await Application.create(data);
     return data;
   }
 
-  static async deleteApplication(id) {
+   async deleteApplication(id) {
     const res = await Application.destroy({
       where: {
         id: id,
@@ -16,7 +16,7 @@ class ApplicationRepository {
     return res;
   }
 
-  static async getPaginatedApplications(filters) {
+   async getPaginatedApplications(filters) {
     const where = filters.description
       ? { description: { [Op.like]: `%${filters.description}%` } }
       : {};
