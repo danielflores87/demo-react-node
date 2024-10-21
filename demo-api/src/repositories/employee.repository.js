@@ -2,7 +2,7 @@ const Employee = require("../models/employee");
 const { Op } = require("sequelize");
 
 class EmployeeRepository {
-  static async createEmployee(data) {
+  async createEmployee(data) {
     await Employee.create(data);
     return data;
   }
@@ -12,7 +12,7 @@ class EmployeeRepository {
     return res;
   }
 
-  static async deleteEmployee(id) {
+  async deleteEmployee(id) {
     const res = await Employee.destroy({
       where: {
         id: id,
@@ -21,7 +21,7 @@ class EmployeeRepository {
     return res;
   }
 
-  static async getPaginatedEmployees(filters) {
+  async getPaginatedEmployees(filters) {
     const where = filters.name
       ? { name: { [Op.like]: `%${filters.name}%` } }
       : {};
