@@ -23,9 +23,8 @@ con la db por defecto se disponen de los siguientes usuarios:
     - Administrador: admin@gmail.com --> 797940
     - Empleado: user@gmail.com --> 797941
 
-Si se desea crear un usuario nuevo o se asocio a una nueva base de datos, se debe crear el usuario 
-por medio de postman, a continuación se proporciona la petición y el body. 
-** Nota: la contraseña será el numero de documento del usuario
+Si se desea crear un usuario nuevo o se asocio a una nueva base de datos, se debe crear el usuario por medio de postman, a continuación se proporciona la petición y el body. 
+** Nota: la contraseña por defecto será el numero de documento del usuario (Se encripta aparte)
 
     - METODO POST: http://localhost:3000/api/auth/users/create
     - BODY: 
