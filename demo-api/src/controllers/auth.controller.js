@@ -77,6 +77,7 @@ class AuthController {
           );
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
+
       if (!isPasswordValid)
         return res
           .status(EHttpStatusCodes.FORBIDDEN)
@@ -86,7 +87,7 @@ class AuthController {
 
       const token = jwt.sign(
         { id: user.id, role: user.role },
-        process.env.TOKEN_KEY,
+        process.env.TOKEN_KEY ?? "",
         {
           expiresIn: "5h",
         }

@@ -20,7 +20,7 @@ describe("test ApplicationController", () => {
     };
   });
 
-  describe("createApplication", () => {
+  describe("test metodo createApplication", () => {
     it("Si se envia todos los datos correctos debe devolver exitoso con el tipo OK", async () => {
       const req = {
         body: {
@@ -58,7 +58,7 @@ describe("test ApplicationController", () => {
     });
   });
 
-  describe("getPaginatedApplications", () => {
+  describe("test metodo getPaginatedApplications", () => {
     it("Debe devolver OK cuando se envian los datos correctos", async () => {
       const req = {
         body: { page: 1, perPage: 10 },
@@ -90,7 +90,7 @@ describe("test ApplicationController", () => {
     });
   });
 
-  describe("deleteApplication", () => {
+  describe("test metodo deleteApplication", () => {
     it("Debe devolver OK cuando se envian los datos correctos ", async () => {
       const req = {
         params: { id: 1 },

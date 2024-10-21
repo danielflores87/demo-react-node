@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../app.context";
+import { ImHome } from "react-icons/im";
 
 export function HeaderComponent() {
   const location = useLocation();
@@ -19,9 +20,12 @@ export function HeaderComponent() {
     return null;
   }
   return (
-    <div className="text-gray-50 bg-gray-700 p-4 flex flex-row justify-between ">
-      <div onClick={() => navigate("/")}>
-        <label className="text-lg font-bold hover:cursor-pointer">Home</label>
+    <div className="text-gray-50 bg-gray-700 p-4 flex justify-between">
+      <div
+        className="font-bold hover:cursor-pointer block px-4  text-2xl hover:text-blue-500"
+        onClick={() => navigate("/")}
+      >
+        <ImHome />
       </div>
       <label className="text-base font-bold">
         Bienvenido, {authorization.name}
