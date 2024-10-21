@@ -1,15 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const AuthController = require("./controllers/auth.controller");
-const applicationController = require("./controllers/application.controller");
-const employeeController = require("./controllers/employee.controller");
+const EmployeeController = require("./controllers/employee.controller");
+const EmployeeRepository = require("./repositories/employee.repository");
 const UserRepository = require("./repositories/user.repository");
-
-
+const ApplicationRepository = require("./repositories/application.repository");
+const ApplicationController = require("./controllers/application.controller");
 
 const userRepository = new UserRepository();
 const authController = new AuthController(userRepository);
 
+const applicationRepository = new ApplicationRepository();
+const applicationController = new ApplicationController(applicationRepository);
+
+const employeeRepository = new EmployeeRepository();
+const employeeController = new EmployeeController(employeeRepository);
 
 router.post("/auth/login", authController.login);
 router.post("/auth/users/create", authController.createUser);

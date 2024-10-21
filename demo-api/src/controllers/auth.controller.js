@@ -92,8 +92,6 @@ class AuthController {
         }
       );
 
-      console.log(user);
-
       return res
         .status(EHttpStatusCodes.OK)
         .json(new ApiResponse({ ...user, token }, EResponseCodes.OK));

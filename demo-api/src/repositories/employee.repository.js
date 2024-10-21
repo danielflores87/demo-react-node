@@ -7,7 +7,7 @@ class EmployeeRepository {
     return data;
   }
 
-  static async getAllEmployees() {
+  async getAllEmployees() {
     const res = await Employee.findAll();
     return res;
   }
